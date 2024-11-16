@@ -30,13 +30,13 @@ public class MainServlet extends HttpServlet {
             final var method = req.getMethod();
             // primitive routing
             if (method.equals("GET") && path.equals("/api/posts")) {
-                controller.all(resp);
+                controller.all();
                 return;
             }
             if (method.equals("GET") && path.matches("/api/posts/\\d+")) {
                 // easy way
                 final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
-                controller.getById(id, resp);
+                controller.getById(id);
                 return;
             }
             if (method.equals("POST") && path.equals("/api/posts")) {
@@ -50,7 +50,7 @@ public class MainServlet extends HttpServlet {
             if (method.equals("DELETE") && path.matches("/api/posts/\\d+")) {
                 // easy way
                 final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
-                controller.removeById(id, resp);
+                controller.removeById(id);
                 return;
             }
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);

@@ -19,7 +19,7 @@ public class PostService {
   }
 
   public List<Post> all() {
-    return repository.all();
+    return repository.findAllByRemovedFalse();
   }
 
   public Post getById(long id) {
@@ -30,8 +30,19 @@ public class PostService {
     return repository.save(post);
   }
 
+
   public void removeById(long id) {
-    repository.removeById(id);
+    Post post = repository.findById(id).orElseThrow(() -> new NotFoundException("Post not found with id: " + id));
+    post.setRemoved(true);
+    repository.save(post);
   }
+
+  public void removePostById(Long id) {
+    Post post = repository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Post not found with id: " + id));
+    post.setRemoved(true);
+    repository.save(post);
+  }
+
 }
 
